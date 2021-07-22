@@ -10,23 +10,23 @@ export class ManagebookingdetailsComponent implements OnInit {
   constructor() { }
 
 
-  // print_ticket() {        
-  //   $('#print_ticket').show();
-  //   $('#sms_email_ticket').hide();
-  //   $('#cancel_ticket').hide();    
-  // }
+  print_ticket() {        
+    // $('#print_ticket').show();
+    // $('#sms_email_ticket').hide();
+    // $('#cancel_ticket').hide();    
+  }
 
-  // sms_email_ticket() {        
-  //   $('#print_ticket').hide();
-  //   $('#sms_email_ticket').show();
-  //   $('#cancel_ticket').hide();    
-  // }
+  sms_email_ticket() {        
+    // $('#print_ticket').hide();
+    // $('#sms_email_ticket').show();
+    // $('#cancel_ticket').hide();    
+  }
 
-  // cancel_ticket() {        
-  //   $('#print_ticket').hide();
-  //   $('#sms_email_ticket').hide();
-  //   $('#cancel_ticket').show();    
-  // }
+  cancel_ticket() {        
+    // $('#print_ticket').hide();
+    // $('#sms_email_ticket').hide();
+    // $('#cancel_ticket').show();    
+  }
 
   ngOnInit(): void {
   }
