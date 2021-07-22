@@ -1,4 +1,4 @@
-import { NgModule,APP_INITIALIZER  } from '@angular/core';
+import { NgModule,APP_INITIALIZER ,CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -91,6 +91,7 @@ const ngWizardConfig: NgWizardConfig = {
     ToastrModule.forRoot(),
     NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
   providers: [AppInitializerService,
     {
       provide: APP_INITIALIZER,
