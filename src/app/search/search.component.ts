@@ -16,6 +16,7 @@ import {ToastrService} from 'ngx-toastr'
 import { ItemsList } from '@ng-select/ng-select/lib/items-list';
 import { NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from "ngx-spinner";
 
 export const DATEPICKER_VALUE_ACCESSOR =  {
   provide: NG_VALUE_ACCESSOR,
@@ -129,9 +130,11 @@ export class SearchComponent  implements ControlValueAccessor {
      private boardingDropingPointService:BoardingDropingPointService,
      private toastr: ToastrService,
      private dtconfig:NgbDatepickerConfig,
-     private datePipe: DatePipe
+     private datePipe: DatePipe,
+     private spinner: NgxSpinnerService
      ) { 
-       
+
+      this.spinner.hide();     
 
 
       const current = new Date();
@@ -467,7 +470,7 @@ export class SearchComponent  implements ControlValueAccessor {
   }
 
   submitFilterForm() {
-    //$('.loader').show();
+    this.spinner.show();
 
    let filterparam='';
     let et= this.entdate;
@@ -543,7 +546,7 @@ export class SearchComponent  implements ControlValueAccessor {
          this.buslist = res.data;
          this.totalfound = res.data.length;   
 
-        // $('.loader').hide();   
+         this.spinner.hide();
       });
 
  }
@@ -654,7 +657,7 @@ export class SearchComponent  implements ControlValueAccessor {
   totalfound: any = 0 ;
 
   getbuslist() {
-  // $('.loader').show();
+    this.spinner.show();
 
     this.listingService.getlist(this.source,this.destination,this.entdate).subscribe(
       res=>{
@@ -667,7 +670,7 @@ export class SearchComponent  implements ControlValueAccessor {
         this.buslist = res.data;
         this.totalfound = res.data.length;  
 
-        //$('.loader').hide();
+        this.spinner.hide();
       });
 
   }
@@ -871,14 +874,19 @@ export class SearchComponent  implements ControlValueAccessor {
   }
 
   getImagePath(icon :any){
-    let objectURL = 'data:image/jpeg;base64,' + icon;
-    return  this.sanitizer.bypassSecurityTrustUrl(objectURL);
+   // let objectURL = 'data:image/jpeg;base64,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'
+    ;
+
+     let objectURL = 'data:image/jpeg;base64,'+icon  ;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
   }
+
+  
 
 
   filteroptions(){
 
-    //$('.loader').show();
+    this.spinner.show();
 
     this.filterOptionsService.getoptions(this.source_id,this.destination_id).subscribe(
       res=>{ 
@@ -889,7 +897,7 @@ export class SearchComponent  implements ControlValueAccessor {
         this.busOperators = res.data[0].busOperator;  
         this.amenities = res.data[0].amenities;
 
-      //  $('.loader').hide();
+        this.spinner.hide();
 
       });      
 

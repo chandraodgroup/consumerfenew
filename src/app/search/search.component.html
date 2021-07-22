@@ -1,3 +1,6 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" 
+type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
 <section class="modify-section sticky-top">
     <div class="container">
         <div class="justify-content-center row">
@@ -350,7 +353,8 @@
                                 <ul *ngIf="bus.amenityName.length != 0" >
                                     <li *ngFor="let nm of bus.amenityName; let i=index; ">
                                         <div class="amenities-icon">
-                                            <img [attr.src]="getImagePath(bus.amenityIcon[i])" class="iconsize">
+                                            <img [attr.src]="getImagePath(bus.amenityIcon[i])"  class="iconsize">
+                                            
                                         </div>
                                         <div  
                                          class="amenities-name">{{ nm }}</div>
