@@ -1,0 +1,213 @@
+.operators-result{background-color: #ffffff; padding: 7rem 0;}
+.opo-img{width: 90%; display: block; margin: auto;}
+.icon-box h4{    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+    color: #072C6B;
+    margin-top: 20px; color: #072c6b;}
+    .icon-box p{     font-weight: 700;
+    margin-bottom: 0px;
+    font-size: 24px;
+    text-align: center;
+    color: #072C6B;
+    margin-top: 0;
+    color: #072c6b;}
+.oper-heading{font-size: 75px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #072c6b;
+    font-weight: 800;}
+.oper-para{font-weight: 400;
+    margin-bottom: 52px;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 40px;
+    color: #072c6b;}
+    thead{background-color: #EFC003; color: #072C6B;}
+    .ma-heading{font-size: 28px; color: #072C6B;margin-bottom: 35px;}
+    .table{background-color: #ffffff; border:none; color: #072C6B;}
+    .table tr td{ border:none;     padding: 21px 15px;}
+    .table tr td a{ background-color: #efc003;
+    color: #072c6b;
+    font-weight: 800;
+    padding: 10px 20px; text-decoration: none; text-align: left;}
+     .box-footer {
+     border-top-left-radius: 0;
+     border-top-right-radius: 0;
+     border-bottom-right-radius: 3px;
+     border-bottom-left-radius: 3px;
+     border-top: 1px solid #f4f4f4;
+     padding: 10px;
+     background-color: #fff
+ }
+
+ .pull-right {
+     float: right !important
+ }
+
+ .pagination>li {
+     display: inline
+ }
+
+ .pagination-sm>li:first-child>a,
+ .pagination-sm>li:first-child>span {
+     border-top-left-radius: 3px;
+     border-bottom-left-radius: 3px
+ }
+
+ .pagination>li:first-child>a,
+ .pagination>li:first-child>span {
+     margin-left: 0;
+     border-top-left-radius: 4px;
+     border-bottom-left-radius: 4px
+ }
+
+ .pagination>li>a {
+     background: #fafafa;
+     color: #666
+ }
+
+ .pagination-sm>li>a,
+ .pagination-sm>li>span {
+     padding: 5px 10px;
+     font-size: 16px;
+    font-weight: 600;
+     line-height: 1.5
+ }
+
+ .pagination>li>a,
+ .pagination>li>span {
+         position: relative;
+    float: left;
+    padding: 6px 14px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #072c6b;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #072c6b;
+    margin: 0 5px;
+ }
+
+
+.textimonials-result {
+    margin: 50px 0;
+    padding: 0 20px 0 5px;
+}
+.textimoni-h2 {
+    text-align: center;
+    color: #072C6B;
+    margin-bottom: 0px;
+    font: normal 900 32px Cooper;
+}
+.textimoni-h1 {
+    text-align: center;
+    color: #072C6B;
+    font: normal 900 52px Cooper;
+}
+
+.de-angu3{
+    width: 100%;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    padding: 30px;
+    opacity: 1;
+    border: 0 !important;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin-bottom: 37px;
+}
+.testimonials-clean .item {
+    margin-bottom: 8px;
+    display: inline-block;
+    width: 100%;
+}
+
+.author {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+.testimonials-clean .item img {
+    max-width: 40px;
+    float: left;
+    margin-right: 12px;
+    margin-top: 0px;
+}
+.testimonials-clean .item .star1 {
+    max-width: 39px;
+    float: left;
+    margin-right: 2px;
+    margin-top: -4px;
+}
+
+.testimonials-clean .item img {
+    max-width: 40px;
+    float: left;
+    margin-right: 12px;
+    margin-top: 0px;
+}
+.star1 {
+    width: 12px;
+    opacity: 1;
+}
+.heading-ser-tes {
+    color: #072C6B;
+    margin-bottom: 35px !important;
+    padding-top: 25px !important;
+    font-size: 20px;
+    font-weight: 500 !important;
+    text-align: center;
+}
+.description {
+    color: #072C6B;
+    font-size: 14px;
+}
+.testimonial-link{
+    background-color: #EFC003;
+    font-size: 16px;
+    display: block;
+    color: #002F80;
+    margin: auto;
+    padding: 6px 0;
+    margin-top: 28px;
+    text-align: center;
+    border-radius: 5px;
+    width: 15%;
+}
+.testi-padding-bottom{
+    margin-top: 20px;
+}
+.re-name{
+    text-align: center;
+    color: #072C6B;
+    font-size: 25px;}
+.name{
+    color: #072C6B;
+    font-size: 18px;}
+.place{
+    color: #072C6B;
+    font-size: 16px;
+    line-height: 5px;}
+.box{margin-bottom: 40px;}
+.star2 {
+    width: 21px;
+    margin-left: 2px;
+    opacity: 1;
+}
+.rv_img1{float: right;
+    margin-top: -11px;}
+    .re-name1 {
+        text-align: right;
+    color: #072C6B;
+    font-size: 36px;
+    font-weight: 800;
+}
+.rati{font-size: 25px; font-weight: 600;}
+ .aminitis-img{width: 70%; display: block; margin: auto;}
+ .ami-para{font-size: 16px !important; }
+ .icon1{ height: 58px;}
+ .operators-aminitis{
+    background-color: #ffffff;
+    padding: 4rem 0;
+}

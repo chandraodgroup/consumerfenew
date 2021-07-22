@@ -1,0 +1,20 @@
+.ng-autocomplete {
+    width:100%;
+  }
+ 
+  
+
+.jrny_dt{
+  background-color: #fff !important;
+  width:240px !important;
+}
+
+
+.autocomplete-container .not-found div {
+  color: #000 !important;
+}
+
+.suggestions-container ul li a:hover {
+  color: #000 !important;
+}
+

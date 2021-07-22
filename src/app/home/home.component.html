@@ -1,0 +1,648 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<!-- Section Hero banner -->
+<section class="hero-banner">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="hero-banner-inner-text">
+                    <h1>plan your journey with</h1>
+                    <h1>the most trusted & safest online bus booking platform</h1>
+                </div>
+            </div>
+
+            <form [formGroup]="searchForm" (ngSubmit)="submitForm()">
+            <div class="col-md-12">
+                <div class="hero-banner-inner-srchbus">
+                    <div class="row no-gutters">
+                       
+                        <div class="col-md-10">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 pr-1">
+                                    <p>From</p>
+                                    <div class="input-group mb-3">
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><img src="assets/img/Icon-metro-location.svg"></span>
+                                        
+                                            <div class="ng-autocomplete">
+                                            
+                                                <ng-autocomplete                                                                  [data]="source_list"
+                                                                 formControlName="source"
+                                                                 required
+                                                                 [initialValue]=""
+                                                                 placeholder="Source"
+                                                                 [searchKeyword]="keyword"
+                                                                 (selected)='selectSource($event)'
+                                                                 (inputChanged)='getSource($event)'                                                         
+                                                                 notFoundText="Not found"
+                                                                 [itemTemplate]="srcitems"
+                                                                 [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <!-- historyIdentifier="locationArrList"
+                                                                 [historyHeading]="historyHeading"
+                                                                 [historyListMaxNumber]="3" -->
+                                      
+                                                <ng-template #srcitems let-item>
+                                                  <a [innerHTML]="item.name"></a>
+                                                </ng-template>
+                                      
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                  <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+                                              </div>
+                                        
+                                        
+                                        </div>
+                                        
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pr-1 to_dest_block">
+                                    <p>To</p>
+                                    <div class="swap-srch">
+                                        <button><img src="assets/img/swap.svg"></button>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon2"><img
+                                                    src="assets/img/Icon-metro-location.svg"></span>
+
+                                                        <div class="ng-autocomplete">
+                                                        
+                                                            <ng-autocomplete                                                                              [data]="destination_list"
+                                                                             formControlName="destination"
+                                                                             required
+                                                                             [initialValue]=""
+                                                                             [placeholder]="Destination"
+                                                                             [searchKeyword]="keyword"
+                                                                             (selected)='selectDestination($event)'
+                                                                             (inputChanged)='getDestination($event)' 
+                                                                             notFoundText="Not found"
+                                                                             [itemTemplate]="dest"
+                                                                             [notFoundTemplate]="notFoundTemplate">
+                                                            </ng-autocomplete>
+                                                  
+                                                            <ng-template #dest let-item>
+                                                              <a [innerHTML]="item.name"></a>
+                                                            </ng-template>
+                                                  
+                                                            <ng-template #notFoundTemplate let-notFound>
+                                                              <div [innerHTML]="notFound"></div>
+                                                            </ng-template>
+                                                          </div>
+                                                    
+                                                    
+                                        </div>
+                                        <!-- <input type="text" class="form-control" placeholder="Destination"
+                                            aria-label="Destination" aria-describedby="basic-addon2"> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4 date_inp">
+                                    <p>Date of Journey</p>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text calendar" id="basic-addon3" (click)="d.toggle()" ><img src="assets/img/Icon-metro-calendar.svg"></span>
+                                        </div>
+                                        <input type="text" class="form-control calendar" formControlName="entry_date"  
+                                        placeholder="Journey Date" aria-label="Journey Date" 
+                                        aria-describedby="basic-addon3" ngbDatepicker (click)="d.toggle()" #d="ngbDatepicker">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <p style="opacity: 0;">Search</p>
+                            <div class="bus_search">
+                                <button type="submit"  class="btn">Search</button>
+                                <!-- <a routerLink="/search" class="btn">Search</a> -->
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        </div>
+    </div>
+</section>
+
+<!-- Offer Section -->
+
+<section class="section-offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-offer-left">
+                    <h2>ODBUS OFFER</h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="section-offer-right">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Offers1</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Offers2</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab"
+                                aria-controls="messages" aria-selected="false">Offers3</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 section-offer-right-tab mt-4">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div id="carouselExampleInterval" class="carousel slide offer-slide" data-ride="carousel"
+                            data-interval="false">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-interval="false">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer01.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer02.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer03.jpg">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item" data-interval="false">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer01.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer02.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer03.jpg">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer01.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer02.jpg">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="assets/img/offer03.jpg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleInterval" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleInterval" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">2</div>
+                    <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section About -->
+
+<section class="section-about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-about-left">
+                    <h3>About Us</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="section-about-right">
+                    <p>Odishaâ€™s first ever online bus ticket booking platform that aims to offer a great level of
+                        convenience and reliability. With ODBUS, you will be able to get rid of the long queues on bus
+                        stations or jammed streets to book the bus tickets. We are the most reliable online portal,
+                        where you will be able to book bus tickets directly from the major bus operators (over 1000 bus
+                        operators) for all the routes in Odisha and surrounding States.</p>
+                    <a href="#">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Growing section -->
+
+<section class="section-growing">
+    <div class="container">
+        <h4>The Numbers are Growing</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="section-growing-box">
+                    <img src="assets/img/routs.svg">
+                    <h3>1500</h3>
+                    <p>Routes</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="section-growing-box">
+                    <img src="assets/img/buses.svg">
+                    <h3>10000</h3>
+                    <p>Buses</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="section-growing-box">
+                    <img src="assets/img/sat-cust.svg">
+                    <h3>300,000+</h3>
+                    <p>Satisfied Customers</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="section-growing-box">
+                    <img src="assets/img/support.svg">
+                    <h3>24/7</h3>
+                    <p>Customer service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- section blank -->
+<section class="why-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="title-section">why ride with odbus?</h3>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="why-us-box">
+                    <img src="assets/img/open-24-hours.svg" style="width:79px;">
+                    <h3>services</h3>
+                    <p>We offer the best in class facilities and services for a happy journey</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="why-us-box">
+                    <img src="assets/img/surface1.svg" style="width:62px;">
+                    <h3>secure</h3>
+                    <p>High standard safety measures and customer friendly staffs</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="why-us-box">
+                    <img src="assets/img/pocket-friendly.svg" style="width:72px;">
+                    <h3>pocket friendly</h3>
+                    <p>Affordable rates to suit every pocket</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="why-us-box">
+                    <img src="assets/img/gift-box.svg" style="width:63px;">
+                    <h3>exciting offers</h3>
+                    <p>We offer unmatched discounts to make your journey more economical</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="app-left">
+                    <h3 class="title-section">Drive yourself <br />through the mobile</h3>
+                    <img src="assets/img/app-down.png">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="app-right">
+                    <img src="assets/img/app-bg.png">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>Get SMS with link to download ODBUS App</p>
+            </div>
+            <div class="col-md-6 pr-0">
+                <input type="text" name="" placeholder="Enter your mobile number" />
+            </div>
+            <div class="col-md-2 pl-0">
+                <button class="btn">Get Link</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="top-routs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="title-section">Poupular Routs</h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="#" class="link-to-page">All Routes</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <ul>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <img class="popl-routs-icon1" src="assets/img/Icon-metro-location.svg">
+                    <span>Bhubaneswer</span>
+                    <img class="popl-routs-icon2" src="assets/img/icon-left-right.svg">
+                    <span>Rourkela</span></a>
+            </li>
+
+
+        </ul>
+    </div>
+</section>
+
+<section class="top-operators">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="title-section">Top Operators</h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="#" class="link-to-page">All Operators</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <ul>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Rudra Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.B.Tour And Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A D T C Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A One Travel</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.R.M.T Co.</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A R SUPER</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aakka Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aarna Enterprise</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aarna Travel</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aarna Travel</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aashin Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aashirwad Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aashu Ruchi Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aayush Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">ABC Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A B Super</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.B.Tour And Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A D T C Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A B Super</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.B.Tour And Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A D T C Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.R.M.T Co.</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A R SUPER</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aakka Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Rudra Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.B.Tour And Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A One Travel</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A D T C Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A R SUPER</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aakka Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">AaRa Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aarna Enterprise</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aarna Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aashin Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aashu Ruchi Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">Aayush Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">AB Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">ABC Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A B Super</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A.B.Tour And Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A D T C Travels</a></li>
+            <li><a href="#"><img src="assets/img/icon-bus-alt.svg">A B Super</a></li>
+        </ul>
+    </div>
+</section>
+

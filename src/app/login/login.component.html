@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row justify-content-center">
+                        <div class="col-md-5">                           
+                                
+                            <div class="card">
+                                <div class="card-header center">LOGIN</div>
+                                <div class="card-body">
+                                    
+    
+                                    <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                                        <div class="row form-group">
+                                            
+                                            <div class="col-md-6">
+
+                                                <label for="via1"><input type="radio" name="via" 
+                                                    id="via1" value="phone" (click)="getLogin($event);" checked> <span class="via_login" >&nbsp; &nbsp;Via Phone</span></label> 
+                                                
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <label for="via1">
+                                                    <input type="radio" name="via" value="email" id="via2" (click)="getLogin($event);">  
+                                                    <span class="via_login" >&nbsp; &nbsp;Via Email</span></label> 
+                                               
+                                            </div>
+                                        </div>
+
+    
+                                        <div class="form-group phone">
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Enter Mobile No." />
+                                                    
+                                                    <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.phone.errors.required">Mobile no. is required</div>
+                                                        <div *ngIf="f.phone.errors.pattern">Enter 10 digit Mobile Number</div>
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group email" style="display: none;">
+                                           <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control" formControlName="email" id="email" placeholder="Enter Your Email" />
+                                                    
+                                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.email.errors.required">Email ID is required</div>
+                                                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                                    </div>
+                                               
+                                               
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="form-group ">
+                                            <button  type="submit" class="btn btn-primary btn-lg btn-block login-button reg">Submit</button>
+                                        </div>
+                                         <p class="text-center">Don't have an account with us? <a class="formlink" routerLink="/signup">Signup</a> </p>   
+                                        </form>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    

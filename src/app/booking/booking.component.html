@@ -1,0 +1,454 @@
+<section class="search-result">
+    <div class="container">
+        <div class="row">
+
+<div class="col-md-12">
+
+	
+
+<ng-wizard [config]="config" (stepChanged)="stepChanged($event)">
+
+	
+	<ng-wizard-step [title]="'Passenger Details'"  [canEnter]="isValidFunctionReturnsObservable.bind(this)" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+	  <form [formGroup]="bookForm1" (ngSubmit)="submitForm1()">
+	  <div class="row passenger">
+		<div class="col-md-8 passenger-detail">
+			<h5>Passenger Details</h5><hr>
+
+			<div formGroupName="bookingInfo">
+
+			
+			<div formArrayName="bookingDetail" 
+			*ngFor="let item of passengerFormGroup.controls; let i = index;">
+				
+				<div class="row"  [formGroupName]="i">
+					<div class="col-md-3">
+						<label>PASSENGER {{i+1}}</label><br>						
+						<ng-select                                                 
+                        [items]="genderArr"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Select Gender"                                       
+                        formControlName="passenger_gender"
+                        [clearable]="false"
+                        >
+                        </ng-select>						
+						<div *ngIf="submitted1 && getPassengerFormGroup(i).controls['passenger_gender'].hasError('required')" class="invalid-feedback">Gender is required</div>
+
+					</div>
+					<div class="col-md-6">
+						<label><span class="grey">Seat No:</span> {{item.value.seat_no}}</label><br>
+						<input type="text"  formControlName="passenger_name" class="form-control" placeholder="Full Name">			
+					
+						<div *ngIf="submitted1 && getPassengerFormGroup(i).controls['passenger_name'].hasError('required')" class="invalid-feedback">Name is required</div>
+					</div>
+
+					<div class="col-md-3">
+						<label>&nbsp;</label><br>
+						<input type="text" formControlName="passenger_age" class="form-control" placeholder="Age">	
+						
+						<div *ngIf="submitted1 && getPassengerFormGroup(i).controls['passenger_age'].errors?.required" class="invalid-feedback">Age is required</div>
+						<div *ngIf="submitted1 &&  getPassengerFormGroup(i).controls['passenger_age'].errors?.pattern" class="invalid-feedback">Enter 2 Digit numbers</div>
+						
+					</div>
+				
+				</div>
+			</div>
+			</div>
+		
+			<div class="padding">
+
+			<h5>Contact Details</h5><hr>
+
+			<div class="row padding" formGroupName="customerInfo">
+				<div class="col-md-4">
+					<label>Name</label><br>
+					<input type="text"  class="form-control" formControlName="name" placeholder="Enter Your Name">	
+					<div *ngIf="submitted1 && GetcustomerInfo.controls.name.errors" class="invalid-feedback">
+						<div *ngIf="GetcustomerInfo.controls.name.errors.required">Name required</div>
+					</div>			
+				</div>
+
+				
+
+				<div class="col-md-4">
+					<label>Mobile No.</label><br>
+					<input type="text"  class="form-control" formControlName="phone" placeholder="Mobile Number">	
+					<div *ngIf="submitted1 && GetcustomerInfo.controls.phone.errors" class="invalid-feedback">
+						<div *ngIf="GetcustomerInfo.controls.phone.errors.required">Mobile no. is required</div>
+						 <div *ngIf="GetcustomerInfo.controls.phone.errors.pattern">Please, Enter 10 digit Mobile Number</div>
+						
+					</div>		
+				</div>
+
+				<div class="col-md-4">
+					<label>Email</label><br>
+					<input type="text" class="form-control" formControlName="email"  placeholder="Email">
+
+					<div *ngIf="submitted1 && GetcustomerInfo.controls.email.errors" class="invalid-feedback">
+						<div *ngIf="GetcustomerInfo.controls.email.errors.required">Email ID is required</div>
+						<div *ngIf="GetcustomerInfo.controls.email.errors.email">Email must be a valid email address</div>
+						
+					</div>	
+				</div>
+			</div>
+
+			<div class="row padding" >
+				<div class="col-md-12">
+					<p class="paragraph"><span># </span> You will receive booking details in this mobile number and email address</p>
+				</div>
+			</div>
+
+		</div>
+
+			<div class="padding">
+				<h5>Have a Coupon Code ?</h5><hr>				
+				<div class="row padding" >
+					<div class="col-md-6">
+						<input type="text"  class="form-control" placeholder="Enter Coupon Code">			
+					</div>	
+					<div class="col-md-2">
+						<button class="btn btn-warning">APPLY</button>			
+					</div>
+			    </div>
+
+		</div>
+	</div>
+
+		<div class="col-md-4 passenger-detail padding-left">
+			
+
+			<div class="row"> 
+				<div class="col-md-1">
+				<img src="assets/img/Icon metro-location (1).svg" class="img1"><br>
+				<img src="assets/img/Line 11.svg"  class="img2"> <br>
+				<img src="assets/img/Icon metro-location (1).svg"  class="img3">
+				</div>
+
+				<div class="col-md-11">
+
+					<h5>Bus Details:</h5><hr>
+					<span class="font">Bus Name</span>
+					<h5>{{ busRecord.busName }}</h5>
+					<h6>{{ busRecord.busType }} {{ busRecord.busTypeName }} {{ busRecord.sittingType}}</h6>
+					<h6>{{ total_seat_id }}</h6>
+
+					<span class="font">From</span>			
+					<h5> {{ source }}</h5>
+					<h6>{{ bookingdata.boardingPoint }} <br>{{ busRecord.departureTime }}</h6>
+
+					<span class="font">To</span>
+					<h5>{{ destination }}</h5>
+					<h6>{{ bookingdata.droppingPoint }}<br>{{ busRecord.arrivalTime }}</h6>
+
+					<h5>Fare Details:</h5><hr>
+
+					<div class="row fare-detail">
+					
+					   <div class="col-md-8"><h6>Basic Fare</h6></div>
+	   
+					   <div class="col-md-4"><h6>₹ {{ bookingdata.TotalPrice }}</h6></div>
+	   
+					 
+					   <div class="col-md-8"><h6>ODBUS Service Charges</h6></div>
+	   
+					   <div class="col-md-4"><h6>₹ 0 </h6></div>
+	   
+				   
+					   <div class="col-md-8"><h6>Transaction fee + GST</h6></div>
+	   
+					   <div class="col-md-4"><h6>₹ 0</h6></div>
+	   
+					
+					   <div class="col-md-8"><h6>Discount</h6></div>
+	   
+					   <div class="col-md-4"><h6>₹ 0</h6></div>
+	   
+	   
+					   <div class="col-md-12" style="display: none;"><img src="assets/img/Icon awesome-check.svg"><span> Coupon Applied</span></div>
+	   
+					   <div class="col-md-8"><h5>Total</h5></div>
+	   
+					   <div class="col-md-4"><h5>₹ {{ bookingdata.TotalPrice }}</h5></div>
+				   
+	   
+				   </div>
+	   
+				   <div class="padding">
+					   <div>
+					   <button type="submit" class="btn btn-warning proceed">PROCEED</button>
+					   </div>
+				   </div>
+				</div>
+			</div>
+		</div>
+      </div>
+    </form>
+</ng-wizard-step>
+	
+	
+	<ng-wizard-step [title]="'Review Details'"  
+	[canEnter]="isValidFunctionReturnsObservable.bind(this)"
+	[canExit]="isValidFunctionReturnsBoolean.bind(this)">
+
+	<form [formGroup]="bookForm2" (ngSubmit)="submitForm2()">
+
+	<div class="row passenger" >
+		<div class="col-md-12 passenger-detail">
+
+			<h5>Journey Details</h5><hr>
+
+			<div class="row">
+				<div class="col-md-3">
+					<h5><img src="assets/img/Icon metro-location (1).svg"> {{ source }}</h5>
+					
+					<h6 class="padding-left">{{ bookingdata.boardingPoint }} <br>{{ busRecord.departureTime }}</h6>
+									
+				</div>
+
+				<div class="col-md-3">
+					<div class="bus"></div>
+				</div>
+
+
+				<div class="col-md-3">
+					<h5><img src="assets/img/Icon metro-location (1).svg"> {{ destination }}</h5>
+
+					<h6 class="padding-left">{{ bookingdata.droppingPoint }}<br>{{ busRecord.arrivalTime }}</h6>
+								
+				</div>
+
+				<div class="col-md-3">
+					<h5>{{ entdate | date:'fullDate' }}</h5>
+					<h5><img src="../../assets/img/Icon awesome-bus-alt (1).svg"> {{ busRecord.busName }}</h5>
+					
+					<h6 class="padding-left">{{ passengerFormGroup.length }} Passenger(s)</h6>
+									
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-md-12 passenger-detail box-padding">
+
+			<h5>Passenger Details</h5><hr>
+
+			<div class="row">
+
+				<div class="col-md-12">
+				<table class="tableclass" cellpadding="12">
+					<thead>
+						<th>Passenger Name</th>
+						<th>Seats</th>
+						<th>Gender</th>
+						<th>Age</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let dt of passengerData.bookingInfo.bookingDetail; let i = index;">
+							<td>{{ dt.passenger_name }}</td>
+							<td>{{ dt.seat_no }}</td>
+							<td>{{ dt.passenger_gender }}</td>
+							<td>{{ dt.passenger_age }}</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<table class="tableclass2" cellpadding="10">
+					
+					<tbody>
+						<tr>
+							<td>Name</td>
+							<td>Mobile Number</td>
+							<td>Email Address</td>
+							<td>&nbsp;</td>
+						</tr>
+
+						<tr>
+							<td>{{ passengerData.customerInfo.name}}</td>
+							<td>+91 {{ passengerData.customerInfo.phone}}</td>
+							<td>{{ passengerData.customerInfo.email}}</td>
+							<td>&nbsp;</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<p class="roboto"><img src="../../assets/img/Icon awesome-hashtag.svg"> will receive booking details in this mobile number & email address</p>
+
+				</div>
+
+				
+				
+			</div>
+
+		</div>
+
+		<div class="col-md-12 passenger-detail box-padding padding">
+			
+			<div class="row">
+					   <div class="col-md-8">
+						<h6 class="grey"><b>PAYABLE AMOUNT</b></h6>
+						   <h5>₹ {{ bookingdata.TotalPrice }}</h5>
+						<label class="terms"><input type="checkbox" formControlName="tnc" [value]="1" > &nbsp;I have read the terms & conditions
+						</label>
+
+						<div *ngIf="submitted2 && bookForm2.controls.tnc.errors" class="invalid-feedback">
+							<div *ngIf="bookForm2.controls.tnc.errors.required">Agree the Terms & Conditions</div>
+							
+						</div>
+
+					</div>
+
+				
+				<div class="col-md-4 payment_box">
+					<div class="row col-md-12">
+						<!-- make-payment -->
+
+
+
+						<input type="image" name="submit" alt="Submit" style="cursor: pointer;" src="../../assets/img/makepayment.png">
+						
+					<!-- <div class="col-md-1">
+						<img src="../../assets/img/Icon material-lock.svg">
+					</div>
+					<div class="col-md-offset-2 col-md-10 payment-btn">
+						<h4>MAKE PAYMENT</h4>
+						<h6 class="small_tag">100% Secure & Easy Payment </h6>
+					
+					</div> -->
+				</div>
+
+				</div>
+				
+			</div>
+
+			<!-- <div class="padding">
+				<div>
+				 <button class="btn btn-primary proceed" (click) ="showPreviousStep();">BACK</button>
+				 <button type="submit" class="btn btn-warning proceed">PROCEED</button>
+				</div>
+			</div> -->
+
+		</div>
+
+
+	</div>
+   </form>
+
+	</ng-wizard-step>	
+	
+   
+  <ng-wizard-step [title]="'Print Ticket'" id="print-section">
+
+	<div class="col-md-12 passenger-detail box-padding">
+		<div class="print-ticket">
+			<h5>Hello {{ passengerData.customerInfo.name }}</h5>
+			<h6 class="print">Your Ticket is Confirmed. (PNR: {{ this.bookTicketResponse.pnr }}).</h6>
+			<h6 class="print">ODBUS Wishing You A Happy Journey <img class="smile" src="../../assets/img/Icon awesome-smile-beam.svg"></h6>
+			<h6 class="print-sm">We have sent booking details to your <b>{{ passengerData.customerInfo.phone}}</b> & <b>{{ passengerData.customerInfo.email}}</b> </h6>
+       </div>
+	</div>
+
+	<div class="col-md-12 passenger-detail box-padding">
+
+		<div class="row" style="margin-top:10px">
+			<div class="col-md-6">
+				<h5>Journey Details</h5>
+			</div>
+
+			<div class="col-md-6 print_btn" align="right">
+				<button (click)="print();" class="btn btn-warning" style="color: #072c6b;font-weight: bold;">PRINT TICKET</button>
+			</div>
+	   </div>
+
+	   <hr>
+
+			<div class="row">
+				<div class="col-md-3">
+					<h5><img src="assets/img/Icon metro-location (1).svg"> {{ source }}</h5>
+					
+					<h6 class="padding-left">{{ bookingdata.boardingPoint }} <br>{{ busRecord.departureTime }}</h6>
+									
+				</div>
+
+				<div class="col-md-3">
+					<div class="bus"></div>
+				</div>
+
+
+				<div class="col-md-3">
+					<h5><img src="assets/img/Icon metro-location (1).svg"> {{ destination }}</h5>
+					<h6 class="padding-left">{{ bookingdata.droppingPoint }}<br>{{ busRecord.arrivalTime }}</h6>
+								
+				</div>
+
+				<div class="col-md-3">
+					<h5>{{ entdate | date:'fullDate' }}</h5>
+					<h5><img src="../../assets/img/Icon awesome-bus-alt (1).svg"> {{ busRecord.busName }}</h5>
+					
+					<h6 class="padding-left">{{ passengerFormGroup.length }} Passenger(s)</h6>
+									
+				</div>
+			</div>
+
+			
+		<h5>Passenger Details</h5><hr>
+
+		<div class="row">
+
+			<div class="col-md-12">
+				<table class="tableclass" cellpadding="12">
+					<thead>
+						<th>Passenger Name</th>
+						<th>Seats</th>
+						<th>Gender</th>
+						<th>Age</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let dt of passengerData.bookingInfo.bookingDetail; let i = index;">
+							<td>{{ dt.passenger_name }}</td>
+							<td>{{ dt.seat_no }}</td>
+							<td>{{ dt.passenger_gender }}</td>
+							<td>{{ dt.passenger_age }}</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			<table class="tableclass2" cellpadding="10">
+				
+				<tbody>
+					<tr>
+						<td>Name</td>
+						<td>Mobile Number</td>
+						<td>Email Address</td>
+						<td>&nbsp;</td>
+					</tr>
+
+					<tr style="font-weight: normal;">
+						<td>{{ passengerData.customerInfo.name}}</td>
+						<td>+91 {{ passengerData.customerInfo.phone}}</td>
+						<td>{{ passengerData.customerInfo.email}}</td>
+						<td>&nbsp;</td>
+					</tr>
+
+				</tbody>
+			</table>
+			</div>
+			
+		</div>
+
+	</div>
+	</ng-wizard-step>
+   
+	
+  </ng-wizard>
+ 
+
+
+  </div>
+  </div>
+  </div>
+  </section>

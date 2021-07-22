@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row justify-content-center">
+                        <div class="col-md-5">                           
+                                
+                            <div class="card">
+                                <div class="card-header center">VERIFY OTP</div>
+                                <div class="card-body">
+    
+                                    <form class="form-horizontal"[formGroup]="otpForm" (ngSubmit)="onSubmit()">
+
+                                          
+                                        <div class="form-group phone">
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                                    <input type="text" class="form-control"  formControlName="otp" id="otp" placeholder="Enter OTP" />
+                                                    <div *ngIf="submitted && f.otp.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.otp.errors.required">OTP is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <button  type="submit" class="btn btn-primary btn-lg btn-block login-button reg">Submit</button>
+                                        </div>
+                                         <p class="text-center">Already a member with us? <a class="formlink" routerLink="/login">Login</a> </p>   
+                                    </form>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    

@@ -1,0 +1,31 @@
+.card-header {
+    color: #072c6b;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 0;
+    background-color: rgb(239 192 3);
+}
+label {
+   font-size: 1rem;
+    font-weight: 500;
+    color: #7f7f7f;
+}
+.form-control {
+    height: 0; 
+    padding: 1.3rem .75rem;
+    font-size: .8rem;
+    font-weight: 400;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #fafafa;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    box-shadow: 1px 2px 7px #f4f4f4;
+}
+.reg{    background-color: #072c6b;
+    border-radius: 34px;}
+.formlink{color: #efc003;
+    text-decoration: underline;}
+
+    .center{
+        text-align: center;
+    }
