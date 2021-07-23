@@ -27,7 +27,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                         
                                             <div class="ng-autocomplete">
                                             
-                                                <ng-autocomplete                                                                  [data]="source_list"
+                                                <ng-autocomplete   
+                                                [ngModel]="swapsource"                                                               [data]="source_list"
                                                                  formControlName="source"
                                                                  required
                                                                  [initialValue]=""
@@ -35,15 +36,11 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                                                  [searchKeyword]="keyword"
                                                                  (selected)='selectSource($event)'
                                                                  (inputChanged)='getSource($event)'                                                         
-                                                                 notFoundText="Not found"
+                                                                 notFoundText=""
                                                                  [itemTemplate]="srcitems"
                                                                  [notFoundTemplate]="notFoundTemplate">
                                                 </ng-autocomplete>
 
-                                                <!-- historyIdentifier="locationArrList"
-                                                                 [historyHeading]="historyHeading"
-                                                                 [historyListMaxNumber]="3" -->
-                                      
                                                 <ng-template #srcitems let-item>
                                                   <a [innerHTML]="item.name"></a>
                                                 </ng-template>
@@ -61,8 +58,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                 </div>
                                 <div class="col-md-4 pr-1 to_dest_block">
                                     <p>To</p>
-                                    <div class="swap-srch">
-                                        <button><img src="assets/img/swap.svg"></button>
+                                    <div class="swap-srch cursor">
+                                       <img (click)="swap();"  src="assets/img/swap.svg">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -71,7 +68,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
 
                                                         <div class="ng-autocomplete">
                                                         
-                                                            <ng-autocomplete                                                                              [data]="destination_list"
+                                                            <ng-autocomplete  
+                                                            [ngModel]="swapdestination"                                                                            [data]="destination_list"
                                                                              formControlName="destination"
                                                                              required
                                                                              [initialValue]=""
@@ -79,7 +77,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                                                              [searchKeyword]="keyword"
                                                                              (selected)='selectDestination($event)'
                                                                              (inputChanged)='getDestination($event)' 
-                                                                             notFoundText="Not found"
+                                                                             notFoundText=""
                                                                              [itemTemplate]="dest"
                                                                              [notFoundTemplate]="notFoundTemplate">
                                                             </ng-autocomplete>

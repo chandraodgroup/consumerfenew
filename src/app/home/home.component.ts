@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
   public keyword = 'name';
 
   position = 'bottom-right';
-  
+  swapdestination:any;
+  swapsource:any;
 
   public source_list:  any = [];
   public destination_list:  any = [];  
@@ -132,6 +133,26 @@ export class HomeComponent implements OnInit {
 
 
   }
+
+  swap(){
+
+    if(this.searchForm.value.source){
+      if(this.searchForm.value.source.name){
+        this.swapdestination=  this.searchForm.value.source.name;
+     }else{
+      this.swapdestination =  this.searchForm.value.source;
+     }
+    }
+
+    if(this.searchForm.value.destination){
+      if(this.searchForm.value.destination.name){
+        this.swapsource= this.searchForm.value.destination.name; 
+       }else{
+        this.swapsource= this.searchForm.value.destination; 
+       }
+    }
+    
+  }
   
   submitForm() {  
     if (this.searchForm.valid) {
@@ -147,8 +168,22 @@ export class HomeComponent implements OnInit {
 
       this.searchForm.value.entry_date= [dt.day,dt.month,dt.year].join("-");
 
-       let c = this.searchForm.value.source.name;
-       let d = this.searchForm.value.destination.name;
+      let c='';
+      let d='';
+
+      if(this.searchForm.value.source.name){
+         c = this.searchForm.value.source.name;
+      }else{
+         c = this.searchForm.value.source;
+      }
+
+
+      if(this.searchForm.value.destination.name){
+         d = this.searchForm.value.destination.name; 
+      }else{
+         d = this.searchForm.value.destination; 
+      }
+
        let dat = this.searchForm.value.entry_date;
 
       this.locationService.setSource(c);

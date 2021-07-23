@@ -24,7 +24,7 @@ export class BookticketService {
 
   book(params :any): Observable<any> {
 
-    //console.log(JSON.stringify(params));
+    console.log(JSON.stringify(params));
 
     return this.httpClient.post<any>(this.apiURL + '/BookTicket' , JSON.stringify(params) ,this.httpOptions)
     .pipe(

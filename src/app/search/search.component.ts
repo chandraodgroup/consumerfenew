@@ -100,6 +100,10 @@ export class SearchComponent  implements ControlValueAccessor {
 
   public Source: string = 'Source';
   public Destination: string = 'Destination';
+
+  swapdestination:any;
+  swapsource:any;
+
   public source_list:  any = [];
   public destination_list:  any = []; 
 
@@ -116,7 +120,7 @@ export class SearchComponent  implements ControlValueAccessor {
   boardingPointArr:any=[];
   droppingPointArr:any=[];
   
-
+  
 
   Lowerberth: any;
   Upperberth: any;
@@ -134,46 +138,65 @@ export class SearchComponent  implements ControlValueAccessor {
      private spinner: NgxSpinnerService
      ) { 
 
-      this.spinner.hide();     
+     
+          this.spinner.hide();
+
+          const current = new Date();
+          dtconfig.minDate = { year: current.getFullYear(), month: 
+          current.getMonth() + 1, day: current.getDate() };
 
 
-      const current = new Date();
-        dtconfig.minDate = { year: current.getFullYear(), month: 
-         current.getMonth() + 1, day: current.getDate() };
+          this.buslistRecord = {} as Buslist;
 
+          this.seatsLayouts=[];
+          this.seatsLayoutRecord={} as SeatsLayout;
 
-      this.buslistRecord = {} as Buslist;
+          config.destroyOnHide = false;
+          config.roles = false;
 
-    this.seatsLayouts=[];
-    this.seatsLayoutRecord={} as SeatsLayout;
-    
-    config.destroyOnHide = false;
-    config.roles = false;
+          this.searchForm = this.fb.group({
+            source: [null, Validators.compose([Validators.required])],
+            destination: [null, Validators.compose([Validators.required])],
+            entry_date: [null, Validators.compose([Validators.required])],
+          });
+        
+          this.filterForm = this.fb.group({
+            price: [0],
+            busType: this.fb.array([]),
+            seatType: this.fb.array([]),
+            boardingPointId: this.fb.array([]),
+            dropingingPointId: this.fb.array([]),
+            operatorId: this.fb.array([]),
+            amenityId: this.fb.array([]),
+          })
 
-    this.searchForm = this.fb.group({
-      source: [null, Validators.compose([Validators.required])],
-      destination: [null, Validators.compose([Validators.required])],
-      entry_date: [null, Validators.compose([Validators.required])],
-    });
-   
-    this.filterForm = this.fb.group({
-      price: [0],
-      busType: this.fb.array([]),
-      seatType: this.fb.array([]),
-      boardingPointId: this.fb.array([]),
-      dropingingPointId: this.fb.array([]),
-      operatorId: this.fb.array([]),
-      amenityId: this.fb.array([]),
-    })
-
-    this.seatForm = this.fb.group({
-      boardingPoint: [null, Validators.compose([Validators.required])],
-      droppingPoint: [null, Validators.compose([Validators.required])],
-      Lowerberth:this.fb.array([]),   
-      Upperberth:this.fb.array([])   
-    });    
+          this.seatForm = this.fb.group({
+            boardingPoint: [null, Validators.compose([Validators.required])],
+            droppingPoint: [null, Validators.compose([Validators.required])],
+            Lowerberth:this.fb.array([]),   
+            Upperberth:this.fb.array([])   
+          });    
   }
 
+  
+
+  swap(){
+    if(this.searchForm.value.source){
+      if(this.searchForm.value.source.name){
+        this.swapdestination=  this.searchForm.value.source.name;
+     }else{
+      this.swapdestination =  this.searchForm.value.source;
+     }
+    }
+
+    if(this.searchForm.value.destination){
+      if(this.searchForm.value.destination.name){
+        this.swapsource= this.searchForm.value.destination.name; 
+       }else{
+        this.swapsource= this.searchForm.value.destination; 
+       }
+    }
+  }
 
   submitSeat(){
       if (this.seatForm.valid) {
@@ -311,7 +334,6 @@ export class SearchComponent  implements ControlValueAccessor {
      
       this.getSeatPriceService.getprice(params).subscribe(
         res=>{
-          //console.log(res);
           //let dd = JSON.parse(res.data);          
           this.TotalPrice=res.data[0].totalPrice;  
           this.buslistRecord.seaterPrice =res.data[0].seaterPrice; 
@@ -472,6 +494,12 @@ export class SearchComponent  implements ControlValueAccessor {
   submitFilterForm() {
     this.spinner.show();
 
+    this.seatlayoutShow='';
+    this.safetyshow='';
+    this.busPhotoshow='';
+    this.reviewShow='';
+    this.policyShow='';
+
    let filterparam='';
     let et= this.entdate;
 
@@ -598,13 +626,28 @@ export class SearchComponent  implements ControlValueAccessor {
         dt.day = "0"+dt.day;
       }
       this.searchForm.value.entry_date= [dt.day,dt.month,dt.year].join("-");
-    
-      let c = this.searchForm.value.source.name;
-      let d = this.searchForm.value.destination.name;     
+
+      let c='';
+      let d='';
+
+      if(this.searchForm.value.source.name){
+         c = this.searchForm.value.source.name;
+      }else{
+         c = this.searchForm.value.source;
+      }
+
+
+      if(this.searchForm.value.destination.name){
+         d = this.searchForm.value.destination.name; 
+      }else{
+         d = this.searchForm.value.destination; 
+      }
+          
       this.source = c;
       this.destination = d;
       this.entdate = this.searchForm.value.entry_date;
-      
+
+     
       this.locationService.setSource(c);
       this.locationService.setDestination(d);
       this.locationService.setSourceID(this.source_id);
@@ -661,14 +704,16 @@ export class SearchComponent  implements ControlValueAccessor {
 
     this.listingService.getlist(this.source,this.destination,this.entdate).subscribe(
       res=>{
-       // console.log(res);
         localStorage.setItem('source', this.source);
         localStorage.setItem('source_id', this.source_id);
         localStorage.setItem('destination', this.destination);
         localStorage.setItem('destination_id', this.destination_id);
         localStorage.setItem('entdate', this.entdate);  
         this.buslist = res.data;
-        this.totalfound = res.data.length;  
+        this.totalfound = res.data.length; 
+        
+        this.swapdestination=this.destination ;
+        this.swapsource=this.source ;
 
         this.spinner.hide();
       });
@@ -751,6 +796,9 @@ export class SearchComponent  implements ControlValueAccessor {
 
   }
 
+  selectedBoard:any;
+  selectedDrop:any;
+
   getBoardingDroppingPoints(){
 
     let bus_id=this.busId;
@@ -759,12 +807,35 @@ export class SearchComponent  implements ControlValueAccessor {
       res=>{
        this.boardingPointArr=res.data[0].boardingPoints;
        this.droppingPointArr=res.data[0].droppingPoints;
+
+       this.selectedBoard= this.boardingPointArr[0].boardingPoints;
+       this.selectedDrop= this.droppingPointArr[0].droppingPoints;
       }); 
     
   }
 
-  ShowLayout(id :any) {
+  seatlayoutShow: any='';
+  safetyshow: any='';
+  busPhotoshow: any='';
+  reviewShow: any='';
+  policyShow: any='';
+  btnstatus :any='hide';
 
+  ShowLayout(id :any,typ:any) {
+
+    this.seatlayoutShow=id;
+    this.safetyshow='';
+    this.busPhotoshow='';
+    this.reviewShow='';
+    this.policyShow='';
+    
+    this.btnstatus=typ;
+
+    if(typ=='show'){      
+    }else{
+      this.seatlayoutShow='';
+    }
+ 
     this.seatForm.reset();
 
     this.buslistRecord =this.buslist[id];
@@ -790,98 +861,65 @@ export class SearchComponent  implements ControlValueAccessor {
         Upperberth:this.fb.array([])   
       });
 
-     
-
-      this.buslist.forEach((v, index) => {
-        if(index != id) {
-          // $('#seatlayout'+index).hide();
-          // $('#showrow'+index).show();
-          // $('#hiderow'+index).hide();
-        }
-      });
+      this.seatlayoutShow = id;
       
     }
 
     this.getseatlayout();
     this.getBoardingDroppingPoints();
-
-    // $('#seatlayout'+id).show();
-    // $('#showrow'+id).hide();
-    // $('#hiderow'+id).show();
-    // $('#safety'+id).hide();
-    // $('#bus_pic'+id).hide();
-    // $('#review'+id).hide();
-    // $('#booking_policy'+id).hide(); 
     
   }
 
-  
-  HideLayout(id: any) {
-    // $('#seatlayout'+id).hide();
-    // $('#showrow'+id).show();
-    // $('#hiderow'+id).hide();
-    // $('#safety'+id).hide();
-    // $('#bus_pic'+id).hide();
-    // $('#review'+id).hide();
-    // $('#booking_policy'+id).hide();    
-  }
-  
+ 
   safety(id:any){
-    // $('#safety'+id).show();
-    // $('#seatlayout'+id).hide();
-    // $('#showrow'+id).show();
-    // $('#hiderow'+id).hide();
-    // $('#bus_pic'+id).hide();
-    // $('#review'+id).hide();
-    // $('#booking_policy'+id).hide();
+    this.seatlayoutShow='';
+    this.safetyshow=id;
+    this.busPhotoshow='';
+    this.reviewShow='';
+    this.policyShow='';
   }
 
   bus_pic(id:any){
-
-    // $('#bus_pic'+id).show();
-    // $('#seatlayout'+id).hide();
-    // $('#showrow'+id).show();
-    // $('#safety'+id).hide();
-    // $('#hiderow'+id).hide();
-    // $('#review'+id).hide();
-    // $('#booking_policy'+id).hide();
+    this.seatlayoutShow='';
+    this.safetyshow='';
+    this.busPhotoshow=id;
+    this.reviewShow='';
+    this.policyShow='';
 
   }
 
   reviews(id:any){
-
-    // $('#review'+id).show();
-    // $('#seatlayout'+id).hide();
-    // $('#showrow'+id).show();
-    // $('#safety'+id).hide();
-    // $('#hiderow'+id).hide();
-    // $('#bus_pic'+id).hide();
-    // $('#booking_policy'+id).hide();
+    this.seatlayoutShow='';
+    this.safetyshow='';
+    this.busPhotoshow='';
+    this.reviewShow=id;
+    this.policyShow='';
 
   }
 
 
   booking_policy(id:any){
-    
-    // $('#booking_policy'+id).show();
-    // $('#review'+id).hide();
-    // $('#seatlayout'+id).hide();
-    // $('#showrow'+id).show();
-    // $('#safety1'+id).hide();
-    // $('#hiderow'+id).hide();
-    // $('#bus_pic'+id).hide();
-
+    this.seatlayoutShow='';
+    this.safetyshow='';
+    this.busPhotoshow='';
+    this.reviewShow='';
+    this.policyShow=id;
   }
 
-  getImagePath(icon :any){
-   // let objectURL = 'data:image/jpeg;base64,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'
-    ;
-
-     let objectURL = 'data:image/jpeg;base64,'+icon  ;
+  getImagePath(icon :any){  
+     let objectURL = 'data:image/svg+xml;base64,'+icon  ;
     return this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
   }
 
-  
+  getsafetyPath(icon :any){  
+    let objectURL = 'data:image/svg;base64,'+icon  ;
+   return this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
+ }
+
+ getBusPath(icon :any){
+  let objectURL = 'data:image/jpeg;base64,'+icon  ;
+  return this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
+ }
 
 
   filteroptions(){
@@ -914,13 +952,13 @@ export class SearchComponent  implements ControlValueAccessor {
 
   showformattedDate(date:any){
     let dt = date.split("-");
-    let dd=new Date(dt[1]+'-'+dt[0]+'-'+dt[2]);
+
+    let dd=new Date(dt[2]+'-'+dt[1]+'-'+dt[0]);
     this.jrnyDt = {
       year: dd.getFullYear(),
-      month: dd.getMonth(),
+      month: dd.getMonth()+1,
       day: dd.getDate()
     }
-  
 
   }
 
@@ -932,6 +970,8 @@ export class SearchComponent  implements ControlValueAccessor {
     this.locationService.currentdestination_id.subscribe(d => { this.destination_id = d || localStorage.getItem('destination_id'); });
     this.locationService.currententdate.subscribe(dat => { this.entdate = dat || localStorage.getItem('entdate'); });
     
+    this.swapdestination=this.destination ;
+    this.swapsource=this.source ;
 
     if((this.source_id=='' || this.source_id==null)  || (this.destination_id=='' || this.destination_id==null ) || (this.entdate=='' || this.entdate==null )){
 

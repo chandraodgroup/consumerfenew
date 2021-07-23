@@ -43,12 +43,12 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                                     <div class="ng-autocomplete">
                                             
                                                         <ng-autocomplete  
-                                                        [ngModel]="source"
+                                                        [ngModel]="swapsource"
                                                                          [data]="source_list"
                                                                          formControlName="source"
                                                                          placeholder="Source"
                                                                          [searchKeyword]="keyword"                                                                 
-                                                                         notFoundText="Not found"
+                                                                         notFoundText=""
                                                                          [itemTemplate]="srcitems"
                                                                          (selected)='selectSource($event)'
                                                                          (inputChanged)='getSource($event)'
@@ -72,8 +72,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                 </div>
                                 <div class="col-md-4 pr-1 to_dest_block">
                                     <p>To</p>
-                                    <div class="swap-srch">
-                                        <button><img src="assets/img/swap.svg"></button>
+                                    <div class="swap-srch cursor">
+                                       <img (click)=swap(); src="assets/img/swap.svg">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -83,7 +83,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                                     <div class="ng-autocomplete">
                                                         
                                                         <ng-autocomplete 
-                                                        [ngModel]="destination"
+                                                        [ngModel]="swapdestination"
                                                                          [data]="destination_list"
                                                                          formControlName="destination"
                                                                          required
@@ -91,7 +91,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                                                          [searchKeyword]="keyword"
                                                                          (selected)='selectDestination($event)'
                                                                          (inputChanged)='getDestination($event)'
-                                                                         notFoundText="Not found"
+                                                                         notFoundText=""
                                                                          [itemTemplate]="dest"
                                                                          [notFoundTemplate]="notFoundTemplate" >
                                                         </ng-autocomplete>
@@ -336,8 +336,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                                 </div>
                             </li>
                             <li class="p-2 flex-fill">
-                                <a class="vw-sit" id="showrow{{i}}" (click)="ShowLayout(i)"  >View Seat</a>
-                                <a class="vw-sit" id="hiderow{{i}}" (click)="HideLayout(i)" style="display: none;"  >Hide Seat</a>
+                                <a class="vw-sit cursor"  (click)="ShowLayout(i,'show')" *ngIf="seatlayoutShow === '' || btnstatus === 'hide'">View Seat</a>
+                                <a class="vw-sit cursor"  (click)="ShowLayout(i,'hide')" *ngIf="seatlayoutShow === i && btnstatus === 'show'"  >Hide Seat</a>
 
                             </li>
                         </ul>
@@ -367,10 +367,10 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                     <div class="bus-dtl-btm-panel-right">
                             <ul>
 
-                                <li><a (click)="safety(i);">Safety</a></li>
-                                <li><a (click)="bus_pic(i);">Bus Photos</a></li>
-                                <li><a (click)="reviews(i);">Reviews</a></li>
-                                <li><a (click)="booking_policy(i);">Booking Policies</a></li>
+                                <li class="cursor"><a (click)="safety(i);">Safety</a></li>
+                                <li class="cursor"><a (click)="bus_pic(i);">Bus Photos</a></li>
+                                <li class="cursor"><a (click)="reviews(i);">Reviews</a></li>
+                                <li class="cursor"><a (click)="booking_policy(i);">Booking Policies</a></li>
                         </ul>
 
                                                                     
@@ -384,7 +384,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
         </div>
 
         <div class="col-md-12 p-0 angu-border" >
-            <div id="seatlayout{{i}}" style="display: none;">
+            <div id="seatlayout{{i}}" *ngIf="seatlayoutShow === i">
             
         
                 
@@ -499,7 +499,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                         bindValue="boardingPoints"
                         placeholder="Select Boarding Point"                                       
                         formControlName="boardingPoint"
-                        [clearable]="false"
+                        [clearable]="true"
+                        [(ngModel)]="selectedBoard"
                         >
                         </ng-select>
                     </div>
@@ -511,7 +512,8 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                         bindValue="droppingPoints"
                         placeholder="Select Dropping Point"                                       
                         formControlName="droppingPoint"
-                        [clearable]="false"
+                        [clearable]="true"
+                        [(ngModel)]="selectedDrop"
                         >
                         </ng-select>
                     </div>
@@ -550,13 +552,13 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
         
             </div>
 
-            <div  id="safety{{i}}" style="display: none;"> 
+            <div  id="safety{{i}}" *ngIf="safetyshow === i"> 
                 <div class="safety_box">
 
                     <div *ngIf="bus.safetyIconName.length != 0 ; else safeiconempty" >
                         <div *ngFor="let sf of bus.safetyIconName; let i=index; " class="p-2 flex-fill de-angu">
 
-                        <img [attr.src]="getImagePath(bus.safetyIcon[i])">
+                        <img [attr.src]="getsafetyPath(bus.safetyIcon[i])">
                         <p class="safety_span">{{ sf }}</p>
 
                         <!-- <div class="p-2 flex-fill de-angu">
@@ -570,11 +572,11 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                     
                 </div>    
             </div>
-            <div id="bus_pic{{i}}" style="display: none;">
+            <div id="bus_pic{{i}}" *ngIf="busPhotoshow === i">
                 <div class="safety_box">
                     <div *ngIf="bus.busPhotos.length != 0 ; else busphotoempty" >
                         <div *ngFor="let sf of bus.busPhotos;" class="p-2 flex-fill de-angu border boxlayout2">
-                        <img [attr.src]="getImagePath(sf)">
+                        <img [attr.src]="getBusPath(sf)">
                         <div class="p-2 flex-fill de-angu border boxlayout2"></div> 
                         </div>
                     </div>
@@ -584,7 +586,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
                 </div>
             </div>
 
-            <div id="review{{i}}" style="display: none;">
+            <div id="review{{i}}" *ngIf="reviewShow === i">
                 <div class="safety_box1">
                     <div class="safety_box-flex">
                     <div class="col-md-3 de-angu2 no-bg">
@@ -717,7 +719,7 @@ type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loadin
         </div>
             </div>
 
-            <div id="booking_policy{{i}}" style="display: none;">
+            <div id="booking_policy{{i}}" *ngIf="policyShow === i">
                 <ul class="ul-booking nav1 nav-pills1" ngbNav #policynav="ngbNav" [activeId] = "5">
 
                     <li class="active" [ngbNavItem] =5>

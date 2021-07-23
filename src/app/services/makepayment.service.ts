@@ -22,6 +22,9 @@ export class MakepaymentService {
   constructor(private httpClient: HttpClient) { }
 
   getOrderid(params :any): Observable<any> {
+
+    console.log(JSON.stringify(params));
+    
     return this.httpClient.post<any>(this.apiURL + '/MakePayment' , JSON.stringify(params) ,this.httpOptions)
     .pipe(
       catchError(this.errorHandler)

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '../src/assets/css/customwizard.css';
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap'); */
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 

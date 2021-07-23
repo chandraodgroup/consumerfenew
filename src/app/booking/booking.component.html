@@ -1,3 +1,6 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" 
+type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
 <section class="search-result">
     <div class="container">
         <div class="row">
@@ -219,7 +222,8 @@
 				</div>
 
 				<div class="col-md-3">
-					<h5>{{ entdate | date:'fullDate' }}</h5>
+					<!-- <h5>{{ entdate | date:'fullDate' }}</h5> -->
+					<h5>{{ entdate }}</h5>
 					<h5><img src="../../assets/img/Icon awesome-bus-alt (1).svg"> {{ busRecord.busName }}</h5>
 					
 					<h6 class="padding-left">{{ passengerFormGroup.length }} Passenger(s)</h6>
@@ -384,7 +388,8 @@
 				</div>
 
 				<div class="col-md-3">
-					<h5>{{ entdate | date:'fullDate' }}</h5>
+					<!-- <h5>{{ entdate | date:'fullDate' }}</h5> -->
+					<h5>{{ entdate }}</h5>
 					<h5><img src="../../assets/img/Icon awesome-bus-alt (1).svg"> {{ busRecord.busName }}</h5>
 					
 					<h6 class="padding-left">{{ passengerFormGroup.length }} Passenger(s)</h6>

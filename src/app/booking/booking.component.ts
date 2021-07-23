@@ -11,6 +11,7 @@ import { ExternalLibraryService } from '../util';
 import { BookticketService } from '../services/bookticket.service';
 import { MakepaymentService } from '../services/makepayment.service';
 import { PaymentstatusService } from '../services/paymentstatus.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 
@@ -77,18 +78,15 @@ export class BookingComponent implements OnInit{
     private router: Router,private bookticketService:BookticketService,
     private razorpayService: ExternalLibraryService,private cd:  ChangeDetectorRef,
     private toastr: ToastrService,private makepaymentService:MakepaymentService,
-    private paymentstatusService: PaymentstatusService
+    private paymentstatusService: PaymentstatusService,
+    private spinner: NgxSpinnerService
     ) {
 
     this.source=localStorage.getItem('source');
     this.destination=localStorage.getItem('destination');   
     const entdt:any =localStorage.getItem('entdate'); 
 
-    let dd = new Date(entdt);
-    let mnth = ("0" + (dd.getMonth() + 1)).slice(-2);
-    let day = ("0" + dd.getDate()).slice(-2);
-    let jjj= [dd.getFullYear(), mnth,day].join("-");
-    this.entdate = jjj;
+    this.entdate = this.showformattedDate(entdt);
 
     this.source_id=localStorage.getItem('source_id');
     this.destination_id=localStorage.getItem('destination_id'); 
@@ -123,11 +121,7 @@ export class BookingComponent implements OnInit{
 
       if(this.bookingdata.UpperBerthSeats.length){
         this.total_seat_id =this.total_seat_id.concat(this.bookingdata.UpperBerthSeats);
-      }
-
-      
-      //console.log(this.bookingdata);
-      //console.log(this.busRecord);      
+      }   
     }
 
     this.bookForm2 = this.fb.group({
@@ -175,6 +169,14 @@ export class BookingComponent implements OnInit{
          passengerList.push(this.createItem(seat,this.busRecord.sleeperPrice)); 
       }
   
+  }
+
+
+  
+  showformattedDate(date:any){
+    let dt = date.split("-");
+    return dt[2]+'-'+dt[1]+'-'+dt[0]
+
   }
 
    createItem(seat:any,fare:any): FormGroup{
@@ -260,24 +262,22 @@ export class BookingComponent implements OnInit{
     if (this.bookForm1.invalid) {
       return;
      }else{
-     // $(".loader").show();
+      this.spinner.show();
       this.passengerData=this.bookForm1.value; 
-
-     // console.log(this.passengerData);
 
       this.bookticketService.book(this.passengerData).subscribe(
         res=>{
         //console.log(res);
 
         if(res.status==1){
-         // $(".loader").hide();
+          this.spinner.hide();
           this.bookTicketResponse=res.data;
           this.showNextStep();
         }
       },
       error => {
 
-        //$('.loader').hide();
+        this.spinner.hide();
 
         this.toastr.error(error.error.message, 'Error', {
           timeOut: 4000,
@@ -359,7 +359,7 @@ export class BookingComponent implements OnInit{
       "totalfare":this.bookingdata.TotalPrice    
     }
 
-    //$('.loader').show();
+    this.spinner.show();
 
     this.paymentstatusService.getPaymentStatus(this.response).subscribe(
       res=>{
@@ -370,7 +370,9 @@ export class BookingComponent implements OnInit{
           positionClass: 'toast-bottom-right'
         }); 
 
-       // $(".loader").delay(5000).fadeOut();      
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 5000);    
       }
 
     },
@@ -379,7 +381,7 @@ export class BookingComponent implements OnInit{
         timeOut: 4000,
         positionClass: 'toast-bottom-right'
       });
-      //$(".loader").hide();
+      this.spinner.hide();
     }
     );
 

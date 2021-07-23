@@ -22,7 +22,7 @@ export class PaymentstatusService {
 
   getPaymentStatus(params :any): Observable<any> {
 
-    //console.log(JSON.stringify(params));
+    console.log(JSON.stringify(params));
 
     return this.httpClient.post<any>(this.apiURL + '/PaymentStatus' , JSON.stringify(params) ,this.httpOptions)
     .pipe(
